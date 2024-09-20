@@ -20,5 +20,5 @@ This is a simple Flask web application that fetches data from a database and ren
 1. **Clone the repository**:
 
    ```bash
-   git clone https://github.com/your-username/flask-card-app.git
+   git clone https://github.com/bannu82/MoviHubapp.git
    cd flask-card-app
