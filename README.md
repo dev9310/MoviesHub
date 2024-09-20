@@ -30,16 +30,20 @@ MovieJoy is a web application that allows users to browse and discover movies. B
    git clone https://github.com/bannu82/moviejoy.git
    cd moviejoy
 
-2. Create a virtual environment (optional but recommended):
+2. Install Virtual environment:
    ```bash
-   python -m venv venv
+   pip install virtualenv
+   
+3. Create a virtual environment (optional but recommended):
+   ```bash
+   viretual venv
    venv\Scripts\activate
 
-3. Install the required packages:
+4. Install the required packages:
    ```bash
    pip install -r requirements.txt
 
-4. Make sure you have the SQLite database (data.db) with the movies table.
+5. Make sure you have the SQLite database (data.db) with the movies table.
 
 ### Running the Application
 1. Start the Flask server:
@@ -59,9 +63,3 @@ moviejoy/
 └── static/
     └── css/
         └── style.css
-
-
-
-
-
-
