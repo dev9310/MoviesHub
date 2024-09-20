@@ -1,3 +1,23 @@
 * {
     user-select: none;
 }
+
+body {
+    color: brown;
+}
+
+.bgcolor {
+    background-color: #001F3F;
+}
+
+.navcolor {
+    background-color: #3A6D8C;
+}
+
+.contcolor {
+    background-color: #6A9AB0;
+}
+
+.btncolor {
+    background-color: #EAD8B1;
+}

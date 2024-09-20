@@ -15,9 +15,9 @@
       href="{{ url_for('static', filename='css/style.css') }}"
     />
   </head>
-  <body>
+  <body class="bgcolor">
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
-      <div class="container-fluid">
+      <div class="container-fluid navcolor">
         <button
           class="navbar-toggler"
           type="button"
@@ -55,7 +55,9 @@
       <div class="row">
         {% for movie in movies %}
         <div class="col-md-3 mb-4">
-          <div class="card h-100">
+          <div
+            class="card h-100 border border-2 border-white border-opacity-75"
+          >
             <img
               src="{{ movie['Link'] }}"
               class="card-img-top"
