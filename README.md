@@ -27,7 +27,7 @@ MovieJoy is a web application that allows users to browse and discover movies. B
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/bannu82/moviejoy.git
+   git clone https://github.com/bannu82/MoviesHub.git
    cd moviejoy
 
 2. Install Virtual environment:
