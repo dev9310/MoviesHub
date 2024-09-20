@@ -54,7 +54,7 @@
     <div class="container mt-4">
       <div class="row">
         {% for movie in movies %}
-        <div class="col-md-4 mb-4">
+        <div class="col-md-3 mb-4">
           <div class="card h-100">
             <img
               src="{{ movie['Link'] }}"
@@ -66,28 +66,20 @@
                 {{ movie['Title'] }} ({{ movie['Time'] }})
               </h5>
               <p class="card-text">
-                <strong>Type:</strong> {{ movie['Type'] }}
+                {{ movie['Time'] }} || {{ movie['Duration'] }}
               </p>
-              <p class="card-text">
-                <strong>Duration:</strong> {{ movie['Duration'] }}
-              </p>
-              <p class="card-text">
-                <strong>Released:</strong> {{ movie['Released'] }}
-              </p>
-              <p class="card-text">
-                <strong>IMDB Rating:</strong> {{ movie['IMDB_rating'] }}
-              </p>
-              <p class="card-text">
-                <strong>Genre:</strong> {{ movie['Genre'] }}
-              </p>
-              <p class="card-text">
-                <strong>Cast:</strong> {{ movie['Casts'] }}
-              </p>
-              <p class="card-text">
-                <strong>Country:</strong> {{ movie['Country'] }}
-              </p>
-              <p class="card-text">
-                <strong>Production:</strong> {{ movie['Production'] }}
+
+              <button
+                type="button"
+                class="btn btn-light mt-2 me-2 position-absolute top-0 end-0"
+              >
+                <strong> {{ movie['Type'] }}</strong>
+              </button>
+
+              <p class="card-text mt-2 ms-2 position-absolute top-0 start-0">
+                <button type="button" class="btn btn-dark">
+                  {{ movie['IMDB_rating'] }}
+                </button>
               </p>
             </div>
           </div>
