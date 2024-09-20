@@ -1,0 +1,39 @@
+<div class="container mt-4">
+  <div class="row">
+    {% for movie in movies %}
+    <div class="col-md-4 mb-4">
+      <div class="card h-100">
+        <img
+          src="{{ movie['Link'] }}"
+          class="card-img-top"
+          alt="{{ movie['Title'] }}"
+        />
+        <div class="card-body">
+          <h5 class="card-title">{{ movie['Title'] }} ({{ movie['Time'] }})</h5>
+          <p class="card-text"><strong>Type:</strong> {{ movie['Type'] }}</p>
+          <p class="card-text">
+            <strong>Duration:</strong> {{ movie['Duration'] }}
+          </p>
+          <p class="card-text">
+            <strong>Released:</strong> {{ movie['Released'] }}
+          </p>
+          <p class="card-text">
+            <strong>IMDB Rating:</strong> {{ movie['IMDB_rating'] }}
+          </p>
+          <p class="card-text"><strong>Genre:</strong> {{ movie['Genre'] }}</p>
+          <p class="card-text"><strong>Cast:</strong> {{ movie['Casts'] }}</p>
+          <p class="card-text">
+            <strong>Description:</strong> {{ movie['movieDesc'] }}
+          </p>
+          <p class="card-text">
+            <strong>Country:</strong> {{ movie['Country'] }}
+          </p>
+          <p class="card-text">
+            <strong>Production:</strong> {{ movie['Production'] }}
+          </p>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
