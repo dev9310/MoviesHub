@@ -23,6 +23,31 @@ class Db_Manager:
         data = df.to_dict(orient='records')
         return data
 
+    def fetch_by_page_no(self, pg_no=1):
+        if self.conn is None:
+            self.get_db_connection()
+        
+        # Adjust LIMIT and OFFSET for pagination
+        offset = (pg_no - 1) * 30  # Calculate the offset based on the page number
+        query = f"SELECT * FROM 'movies' LIMIT 30 OFFSET {offset}"
+        
+        df = pd.read_sql(query, self.conn)
+        data = df.to_dict(orient='records')
+        return data
+
+    def fetch_by_index(self, idx):
+        if self.conn is None:
+            self.get_db_connection()
+
+        query = f"SELECT * FROM `movies` WHERE `index` = {idx}"
+        df = pd.read_sql(query, self.conn)
+
+        # Return the first record as a dictionary if it exists
+        if not df.empty:
+            return df.iloc[0].to_dict()  # Return the first record as a dict
+        return {}
+
+
     def close_connection(self):
         if self.conn:
             self.conn.close()
@@ -37,14 +62,3 @@ class Db_Manager:
         self.total_movies = result['total_movies'][0]     
         
     
-    def fetch_by_page_no(self, pg_no=1):
-        if self.conn is None:
-            self.get_db_connection()
-        
-        # Adjust LIMIT and OFFSET for pagination
-        offset = (pg_no - 1) * 30  # Calculate the offset based on the page number
-        query = f"SELECT * FROM 'movies' LIMIT 30 OFFSET {offset}"
-        
-        df = pd.read_sql(query, self.conn)
-        data = df.to_dict(orient='records')
-        return data

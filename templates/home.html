@@ -1,12 +1,13 @@
-{% extends 'base.html' %}
-{% block body %}
+{% extends 'base.html' %} {% block body %}
 
 <!-- **** Pagination **** -->
 <nav aria-label="Page navigation example ">
   <ul class="pagination d-flex justify-content-center">
 
-    {% if (pg_no) < 3 %} <li class="page-item">
-      <a class="page-link d-none" href="#" aria-label="Previous"></a>
+    {% if (pg_no)
+    < 3 %} <li class="page-item">
+      <a class="page-link disabled" href="#" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
       </a>
       </li>
 
@@ -16,25 +17,23 @@
           <span aria-hidden="true">&laquo;</span>
         </a>
       </li>
-      {% endif %}
-
-      {% if (pg_no-1) >= total_pages %}
+      {% endif %} {% if (pg_no-1) >= total_pages %}
+      <li class="page-item"><a class="page-link" href="/home/page={{ pg_no -2}}">{{ pg_no-2 }}</a></li>
       <li class="page-item"><a class="page-link" href="/home/page={{ pg_no - 1}}">{{
           pg_no -1 }}</a></li>
-      <li class="page-item"><a class="page-link" href="/home/page={{ pg_no  }}">{{ pg_no }}</a></li>
+      <li class="page-item"><a class="page-link active" href="/home/page={{ pg_no  }}">{{ pg_no }}</a></li>
       {% elif (pg_no-1) == 0 %}
-      <li class="page-item"><a class="page-link" href="/home/page={{ pg_no  }}">{{ pg_no }}</a></li>
+      <li class="page-item"><a class="page-link active" href="/home/page={{ pg_no  }}">{{ pg_no }}</a></li>
       <li class="page-item"><a class="page-link" href="/home/page={{ pg_no +1}}">{{ pg_no+1 }}</a></li>
       <li class="page-item"><a class="page-link" href="/home/page={{ pg_no +2}}">{{ pg_no+2 }}</a></li>
       {% else %}
       <li class="page-item"><a class="page-link" href="/home/page={{ pg_no - 1}}">{{ pg_no -1 }}</a></li>
-      <li class="page-item"><a class="page-link" href="/home/page={{ pg_no  }}">{{ pg_no }}</a></li>
+      <li class="page-item"><a class="page-link active " href="/home/page={{ pg_no  }}">{{ pg_no }}</a></li>
       <li class="page-item"><a class="page-link" href="/home/page={{ pg_no +1}}">{{ pg_no+1 }}</a></li>
-      {% endif %}
-
-      {% if pg_no+3 > total_pages %}
+      {% endif %} {% if pg_no > total_pages %}
       <li class="page-item"></li>
-      <a class="page-link d-none" href="/home/page={{ pg_no }}" aria-label="Next">
+      <a class="page-link disabled" href="/home/page={{ pg_no }}" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
       </a>
       </li>
       {% else %}
@@ -54,7 +53,7 @@
     {% for movie in movies %}
     <div class="col-md-2 mb-4 color-b">
       <div class="card h-auto border border-2 border-white border-opacity-75" data-index="{{ movie['index'] }}"
-        onclick="Card_clicked(event)">
+        data-title="{{movie['Title']}}" onclick="Card_clicked(event)">
         <img src="{{ movie['Link'] }}" class="card-img-top" alt="{{ movie['Title'] }}" />
         <div class="card-body">
           <h6 class="card-title text-truncate">
@@ -66,8 +65,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dot"
               viewBox="0 0 16 16">
               <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3" />
-            </svg>
-            {{ movie['Duration'] }}
+            </svg> {{ movie['Duration'] }}
           </p>
 
           <p class="card-text mt-2 ms-2 position-absolute top-0 start-0">
