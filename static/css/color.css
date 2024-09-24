@@ -1,0 +1,4 @@
+.bg-grad {
+    background: #000428;
+    background: linear-gradient(to right, #001F3F, #3A6D8C);
+}

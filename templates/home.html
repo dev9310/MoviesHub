@@ -25,6 +25,7 @@
       {% elif (pg_no-1) == 0 %}
       <li class="page-item"><a class="page-link" href="/home/page={{ pg_no  }}">{{ pg_no }}</a></li>
       <li class="page-item"><a class="page-link" href="/home/page={{ pg_no +1}}">{{ pg_no+1 }}</a></li>
+      <li class="page-item"><a class="page-link" href="/home/page={{ pg_no +2}}">{{ pg_no+2 }}</a></li>
       {% else %}
       <li class="page-item"><a class="page-link" href="/home/page={{ pg_no - 1}}">{{ pg_no -1 }}</a></li>
       <li class="page-item"><a class="page-link" href="/home/page={{ pg_no  }}">{{ pg_no }}</a></li>
@@ -52,7 +53,8 @@
   <div class="row">
     {% for movie in movies %}
     <div class="col-md-2 mb-4 color-b">
-      <div class="card h-auto border border-2 border-white border-opacity-75">
+      <div class="card h-auto border border-2 border-white border-opacity-75" data-index="{{ movie['index'] }}"
+        onclick="Card_clicked(event)">
         <img src="{{ movie['Link'] }}" class="card-img-top" alt="{{ movie['Title'] }}" />
         <div class="card-body">
           <h6 class="card-title text-truncate">

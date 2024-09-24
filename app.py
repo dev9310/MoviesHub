@@ -26,5 +26,11 @@ def pages(pg_no):
     
     return render_template('home.html', pg_no=pg_no , movies=movies , total_movies=ttl_mv , total_pages =ttl_pg )
 
+@app.route('/home/movie=<int:index>')
+def movie(index):
+    
+    return render_template('movie.html' , index=index)
+    ...
+
 if __name__ == "__main__":
     app.run(debug=True)

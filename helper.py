@@ -11,7 +11,7 @@ class Db_Manager:
     
     def get_db_connection(self):
         # Set check_same_thread=False to allow usage across threads
-        self.conn = sqlite3.connect('data.db', check_same_thread=False)
+        self.conn = sqlite3.connect('movies.db', check_same_thread=False)
         self.conn.row_factory = sqlite3.Row
         
     def fetch_movie(self, n=30):
