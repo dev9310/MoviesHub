@@ -35,11 +35,11 @@ class Db_Manager:
         data = df.to_dict(orient='records')
         return data
 
-    def fetch_by_index(self, idx):
+    def fetch_by_id(self, id):
         if self.conn is None:
             self.get_db_connection()
 
-        query = f"SELECT * FROM `movies` WHERE `index` = {idx}"
+        query = f"SELECT * FROM `movies` WHERE `Id` = {id}"
         df = pd.read_sql(query, self.conn)
 
         # Return the first record as a dictionary if it exists

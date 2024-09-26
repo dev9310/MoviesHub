@@ -1,14 +1,19 @@
 {% extends 'base.html' %} {% block movie_block %}
-<span class="badge text-bg-secondary">{{ index }}</span>
+
+
+
+<span class="badge text-bg-secondary">{{ movie['Id'] }}</span>
 <span class="badge text-bg-secondary">{{ movie['Title'] }}</span>
 <span class="badge text-bg-secondary">{{ movie['Time'] }}</span>
 <span class="badge text-bg-secondary">{{ movie['Type'] }}</span>
 <span class="badge text-bg-secondary">{{ movie['Duration'] }}</span>
-<span class="badge text-bg-secondary">{{ movie['Link'] }}</span>
+<span class="badge text-bg-secondary">{{ movie['CoverBg'] }}</span>
 <span class="badge text-bg-secondary">{{ movie['movieDesc'] }}</span>
 <span class="badge text-bg-secondary">{{ movie['Released'] }}</span>
 <span class="badge text-bg-secondary">{{ movie['Genre'] }}</span>
 <span class="badge text-bg-secondary">{{ movie['Casts'] }}</span>
 <span class="badge text-bg-secondary">{{ movie['Country'] }}</span>
 <span class="badge text-bg-secondary">{{ movie['Production'] }}</span>
-<span class="badge text-bg-secondary">{{ movie['IMDB_rating'] }}</span> {% endblock movie_block %}
+<span class="badge text-bg-secondary">{{ movie['IMDB_rating'] }}</span>
+
+<img src="{{ movie['CoverBg'] }}" class="img-fluid   img-thumbnail" alt=""> {% endblock movie_block %}
