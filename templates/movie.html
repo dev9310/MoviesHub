@@ -1,19 +1,78 @@
 {% extends 'base.html' %} {% block movie_block %}
 
+<img src="{{ movie['coverBg'] }}" loading="lazy" class="position-absolute start-0 img-fluid z-n1 gradient-opacity" alt="">
 
+<div class="movie-container">
+    <div class="card mb-3 border-0 " style="max-width: 80vw; background-color: rgba(0, 0, 0, 0); ">
+        <div class="row g-0">
+            <div class="col-md-2 mt-4">
+                <img src="{{movie['img']}}" loading="lazy" class="img-fluid " alt="...">
+            </div>
+            <div class="col-md-10">
+                <div class="card-body">
+                    <h2 class="card-title text-white">{{ movie['title']}}</h2>
+                    <strong>
+                        <p class="text-warning d-inline">IMDB: {{movie['imdb']}}</p>
+                        <span class="badge text-bg-secondary d-inline">{{movie['type']}}</span>
+                    </strong>
+                    <p class="card-text text-white mt-3">{{movie['movieDesc']}}</p>
 
-<span class="badge text-bg-secondary">{{ movie['Id'] }}</span>
-<span class="badge text-bg-secondary">{{ movie['Title'] }}</span>
-<span class="badge text-bg-secondary">{{ movie['Time'] }}</span>
-<span class="badge text-bg-secondary">{{ movie['Type'] }}</span>
-<span class="badge text-bg-secondary">{{ movie['Duration'] }}</span>
-<span class="badge text-bg-secondary">{{ movie['CoverBg'] }}</span>
-<span class="badge text-bg-secondary">{{ movie['movieDesc'] }}</span>
-<span class="badge text-bg-secondary">{{ movie['Released'] }}</span>
-<span class="badge text-bg-secondary">{{ movie['Genre'] }}</span>
-<span class="badge text-bg-secondary">{{ movie['Casts'] }}</span>
-<span class="badge text-bg-secondary">{{ movie['Country'] }}</span>
-<span class="badge text-bg-secondary">{{ movie['Production'] }}</span>
-<span class="badge text-bg-secondary">{{ movie['IMDB_rating'] }}</span>
+                    <div class=" row ">
+                        <div class="col-md-4 ">
+                            <p>
+                                <strong class="text-white ">Released :</strong>
+                                <span class="card-text text-white ">{{ movie['released'] }}</span>
+                            </p>
+                            <p>
+                                <strong class="text-white ">Genre :</strong>
+                                <span class="card-text text-white ">
+                                    {% for gen in movie['genre'] %}
+                                    <a href="/home/page=1&genre={{gen}}"
+                                        class="link-light link-offset-2 link-underline-opacity-0 link-underline-opacity-50-hover ">{{gen}}
+                                    </a>
+                                    {% endfor %}
 
-<img src="{{ movie['CoverBg'] }}" class="img-fluid   img-thumbnail" alt=""> {% endblock movie_block %}
+                                </span>
+                            </p>
+                            <p></p>
+                            <strong class="text-white ">Casts :</strong>
+                            <span class="card-text text-white ">
+                                {% for cast in movie['casts'] %}
+                                <a href="# "
+                                    class="link-light link-offset-2 link-underline-opacity-0 link-underline-opacity-50-hover ">{{cast}}
+                                </a>
+                                {% endfor %}
+
+                            </span>
+                            </p>
+                        </div>
+                        <div class="col-md-4 ">
+                            <p>
+                                <strong class="text-white ">Duration :</strong>
+                                <span class="card-text text-white ">{{ movie['duration'] }}</span>
+
+                            </p>
+
+                            <p>
+                                <strong class="text-white ">Country :</strong>
+                                <a href="# " class="link-light link-offset-2 link-underline-opacity-0 link-underline-opacity-50-hover ">
+                                    {{movie['country'] }}</a>
+                            </p>
+                            <p>
+                                <strong class="text-white ">Production :</strong> {% for production in movie['production'] %}
+                                <a href="# " class="link-light link-offset-2 link-underline-opacity-0 link-underline-opacity-50-hover ">
+                                    {{ production }}</a> {% endfor %}
+
+                            </p>
+
+                        </div>
+                    </div>
+
+                    <p class="card-text "><small class="text-body-secondary ">Last updated 3 mins ago</small></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock movie_block %}

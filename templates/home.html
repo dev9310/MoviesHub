@@ -1,89 +1,100 @@
 {% extends 'base.html' %} {% block body %}
 
 <!-- **** Pagination **** -->
-<nav aria-label="Page navigation example ">
-  <ul class="pagination d-flex justify-content-center">
 
-    {% if (pg_no)
-    < 3 %} <li class="page-item">
-      <a class="page-link disabled" href="#" aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-      </a>
-      </li>
+<nav aria-label="Page navigation example">
+    <ul class="pagination d-flex justify-content-center">
 
-      {% else %}
-      <li class="page-item">
-        <a class="page-link" href="/home/page={{pg_no-2}}" aria-label="Previous">
-          <span aria-hidden="true">&laquo;</span>
-        </a>
-      </li>
-      {% endif %} {% if (pg_no-1) >= total_pages %}
-      <li class="page-item"><a class="page-link" href="/home/page={{ pg_no -2}}">{{ pg_no-2 }}</a></li>
-      <li class="page-item"><a class="page-link" href="/home/page={{ pg_no - 1}}">{{
-          pg_no -1 }}</a></li>
-      <li class="page-item"><a class="page-link active" href="/home/page={{ pg_no  }}">{{ pg_no }}</a></li>
-      {% elif (pg_no-1) == 0 %}
-      <li class="page-item"><a class="page-link active" href="/home/page={{ pg_no  }}">{{ pg_no }}</a></li>
-      <li class="page-item"><a class="page-link" href="/home/page={{ pg_no +1}}">{{ pg_no+1 }}</a></li>
-      <li class="page-item"><a class="page-link" href="/home/page={{ pg_no +2}}">{{ pg_no+2 }}</a></li>
-      {% else %}
-      <li class="page-item"><a class="page-link" href="/home/page={{ pg_no - 1}}">{{ pg_no -1 }}</a></li>
-      <li class="page-item"><a class="page-link active " href="/home/page={{ pg_no  }}">{{ pg_no }}</a></li>
-      <li class="page-item"><a class="page-link" href="/home/page={{ pg_no +1}}">{{ pg_no+1 }}</a></li>
-      {% endif %} {% if pg_no > total_pages %}
-      <li class="page-item"></li>
-      <a class="page-link disabled" href="/home/page={{ pg_no }}" aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-      </a>
-      </li>
-      {% else %}
-      <li class="page-item"></li>
-      <a class="page-link " href="/home/page={{ pg_no+3 }}" aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-      </a>
-      </li>
-      {% endif %}
+        {% if (pg_no)
+        < 3 %} <li class="page-item">
+            <a class="page-link disabled" href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+            </li>
 
-  </ul>
+            {% else %}
+            <li class="page-item">
+                <a class="page-link" href="/home/page={{pg_no-2}}&genre={{genre}}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+
+            {% endif %} {% if (pg_no) >= total_pages %}
+            <li class="page-item"><a class="page-link" href="/home/page={{ pg_no -2}}&genre={{genre}}">{{ pg_no-2 }}</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="/home/page={{ pg_no - 1}}&genre={{genre}}">{{
+                    pg_no -1 }}</a></li>
+            <li class="page-item"><a class="page-link active" href="/home/page={{ pg_no  }}&genre={{genre}}">{{ pg_no
+                    }}</a></li>
+
+            {% elif (pg_no-1) == 0 %}
+            <li class="page-item"><a class="page-link active" href="/home/page={{ pg_no  }}&genre={{genre}}">{{ pg_no
+                    }}</a></li>
+            <li class="page-item"><a class="page-link" href="/home/page={{ pg_no +1}}&genre={{genre}}">{{ pg_no+1 }}</a>
+            </li>
+            <li class="page-item"><a class="page-link" href="/home/page={{ pg_no +2}}&genre={{genre}}">{{ pg_no+2 }}</a>
+            </li>
+
+            {% else %}
+            <li class="page-item"><a class="page-link" href="/home/page={{ pg_no - 1}}&genre={{genre}}">{{ pg_no -1
+                    }}</a></li>
+            <li class="page-item"><a class="page-link active " href="/home/page={{ pg_no  }}&genre={{genre}}">{{ pg_no
+                    }}</a></li>
+            <li class="page-item"><a class="page-link" href="/home/page={{ pg_no +1}}&genre={{genre}}">{{ pg_no+1 }}</a>
+            </li>
+
+            {% endif %} {% if (pg_no+3) > total_pages %}
+            <li class="page-item">
+                <a class="page-link disabled" href="/home/page={{ pg_no }}&genre={{genre}}" aria-label="Next"><span
+                        aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+
+            {% else %}
+            <li class="page-item">
+                <a class="page-link " href="/home/page={{ pg_no+3 }}&genre={{genre}}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+            {% endif %}
+
+    </ul>
 </nav>
-
 <!-- **** Cards **** -->
 <div class="container mt-5">
-  <div class="row">
-    {% for movie in movies %}
-    <div class="col-md-2 mb-4 color-b">
-      <div class="card h-auto border border-2 border-white border-opacity-75" data-Id="{{ movie['Id'] }}"
-        data-title="{{movie['Title']}}" onclick="Card_clicked(event)">
-        <img src="{{ movie['Img'] }}" class="card-img-top" alt="{{ movie['Title'] }}" />
-        <div class="card-body">
-          <h6 class="card-title text-truncate">
-            {{ movie['Title'] }} ({{ movie['Time'] }})
-          </h6>
+    <div class="row">
+        {% for movie in movies %}
+        <div class="col-md-2 mb-4 color-b">
+            <div class="card h-auto border border-2 border-white border-opacity-75" data-Id="{{ movie['Id'] }}" data-title="{{movie['Title']}}" onclick="Card_clicked(event)">
+                <img src="{{ movie['Img'] }}" class="card-img-top" alt="{{ movie['Title'] }}" />
+                <div class="card-body">
+                    <h6 class="card-title text-truncate">
+                        {{ movie['Title'] }} ({{ movie['Time'] }})
+                    </h6>
 
-          <p class="card-text">
-            {{ movie['Time'] }}
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dot"
-              viewBox="0 0 16 16">
-              <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3" />
-            </svg> {{ movie['Duration'] }}
-          </p>
+                    <p class="card-text">
+                        {{ movie['Time'] }}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
+                            <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3" />
+                        </svg> {{ movie['Duration'] }}
+                    </p>
 
-          <p class="card-text mt-2 ms-2 position-absolute top-0 start-0">
-            <button type="button" class="btn btn-dark">
+                    <p class="card-text mt-2 ms-2 position-absolute top-0 start-0">
+                        <button type="button" class="btn btn-dark">
 
-            </button>
-          </p>
-          <span class="badge text-white bg-dark mt-2 ms-2 position-absolute top-0 start-0 fs-6">{{
-            movie['IMDB_rating'] }}</span>
+                        </button>
+                    </p>
+                    <span class="badge text-white bg-dark mt-2 ms-2 position-absolute top-0 start-0 fs-6">{{
+                        movie['IMDB_rating'] }}</span>
 
-          <span class="badge text-white bg-dark mt-2 me-2 position-absolute top-0 end-0 fs-6">{{
-            movie['Type']
-            }}</span>
+                    <span class="badge text-white bg-dark mt-2 me-2 position-absolute top-0 end-0 fs-6">{{
+                        movie['Type']
+                        }}</span>
+                </div>
+            </div>
         </div>
-      </div>
+        {% endfor %}
     </div>
-    {% endfor %}
-  </div>
 </div>
 
 {% endblock body %}

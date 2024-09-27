@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css?family=Exo:400,700');
-@import url('{{url_for}}');
 * {
     margin: 0px;
     padding: 0px;
