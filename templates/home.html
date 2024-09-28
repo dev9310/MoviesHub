@@ -64,10 +64,11 @@
 <div class="container mt-5">
     <div class="row">
         {% for movie in movies %}
-        <div class="col-md-2 mb-4 color-b">
+        <div class="col-6 col-md-2 mb-4 color-b">
+            <!-- Updated column sizes -->
             <div class="card h-auto border border-2 border-white border-opacity-75" data-Id="{{ movie['Id'] }}"
                 data-title="{{movie['Title']}}" onclick="Card_clicked(event)">
-                <img src="{{ movie['Img'] }}" class="card-img-top " alt="{{ movie['Title'] }}" />
+                <img src="{{ movie['Img'] }}" class="card-img-top" alt="{{ movie['Title'] }}" />
                 <div class="card-body">
                     <h6 class="card-title text-truncate">
                         {{ movie['Title'] }}
@@ -82,23 +83,22 @@
                     </p>
 
                     <p class="card-text mt-2 ms-2 position-absolute top-0 start-0">
-                        <button type="button" class="btn btn-dark">
-
-                        </button>
+                        <button type="button" class="btn btn-dark"></button>
                     </p>
 
-                    <h1 class="bg-dark mt-2 ms-2 position-absolute top-0 start-0 fs-6 rounded-3"><span
-                            class="badge text-white ">{{
-                            movie['IMDB_rating'] }}</span></h1>
+                    <h1 class="bg-dark mt-2 ms-2 position-absolute top-0 start-0 fs-6 rounded-3">
+                        <span class="badge text-white ">{{ movie['IMDB_rating'] }}</span>
+                    </h1>
 
-                    <h1 class="bg-dark mt-2 me-2 position-absolute top-0 end-0 fs-6 rounded-3"><span
-                            class="badge text-white ">{{
-                            movie['Type']}}</span></h1>
+                    <h1 class="bg-dark mt-2 me-2 position-absolute top-0 end-0 fs-6 rounded-3">
+                        <span class="badge text-white ">{{ movie['Type'] }}</span>
+                    </h1>
                 </div>
             </div>
         </div>
         {% endfor %}
     </div>
 </div>
+
 
 {% endblock body %}
