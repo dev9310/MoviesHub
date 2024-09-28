@@ -75,17 +75,17 @@
 @media screen and (max-width: 990px) {
     .movie-container {
         position: absolute;
-        top: 40%;
+        top: 30%;
         left: 20px;
         width: auto;
         height: auto;
     }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 500px) {
     .movie-container {
         position: absolute;
-        top: 25%;
+        top: 20%;
         left: 20px;
         width: auto;
         height: auto;
