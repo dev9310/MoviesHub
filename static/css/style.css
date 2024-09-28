@@ -28,3 +28,46 @@
 .multi-country-column {
     width: 1000px;
 }
+
+
+/* style.css */
+
+
+/* Error Page Styles */
+
+.error-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f8f9fa;
+    /* Light background color */
+    color: #343a40;
+    /* Dark text color */
+}
+
+.error-h1 {
+    font-size: 4rem;
+    font-weight: 700;
+    color: #dc3545;
+    /* Red color for 404 error */
+}
+
+.error-h3 {
+    font-size: 1.5rem;
+    color: #6c757d;
+    /* Grayish text for description */
+}
+
+.btn-color {
+    background-color: #007bff;
+    /* Bootstrap primary color */
+    color: #fff;
+    border: none;
+}
+
+.btn-color:hover {
+    background-color: #0056b3;
+    /* Darker blue on hover */
+}

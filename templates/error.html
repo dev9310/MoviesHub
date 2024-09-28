@@ -1,13 +1,11 @@
 {% extends 'base.html' %} {% block ErrorPage %}
+<div class="error-container text-center">
+    <h1 class="error-h1 display-1">404 - Page Not Found</h1>
+    <h3 class="error-h3 mt-3">It looks like you're lost. Let's get you back to the homepage!</h3>
 
-<div class="error-container">
-    <h1 class="error-h1">404 Page Not Found</h1>
-    <h3 class="error-h3">Go to Home Page</h3>
-    <button type="button" class="btn btn-color ps-3 pe-3 pb-2 mt-4 p-1 fs-2 fw-semibold rounded-4" onclick="window.location.href='http://127.0.0.1:5000/home'">
-        Explore
+    <button type="button" class="btn btn-color mt-4 p-3 fs-4 fw-semibold rounded-4"
+        onclick="window.location.href='/home'">
+        Go Home
     </button>
 </div>
-
-
-
-{% endblock ErrorPage %}
+{% endblock %}
