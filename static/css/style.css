@@ -72,8 +72,6 @@
     /* Darker blue on hover */
 }
 
-
-/* 
 @media screen and (max-width: 990px) {
     .movie-container {
         position: absolute;
@@ -92,4 +90,4 @@
         width: auto;
         height: auto;
     }
-} */
+}
