@@ -49,7 +49,7 @@ class Db_Manager:
     FROM `movies`
     GROUP BY `Production`
     ORDER BY production_count DESC
-    LIMIT 30''', self.conn)
+    LIMIT 24''', self.conn)
         
         productions = df['Production'].apply(ast.literal_eval)
         all_production = [production for sublist in productions for production in sublist]
