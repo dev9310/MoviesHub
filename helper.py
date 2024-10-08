@@ -12,62 +12,10 @@ class Db_Manager:
         self.count_movies()
         self.total_pages = self.total_movies//30 
         self.unique_genre_ = self.genreList_extractor()
-        self.unique_country_ = self.countryList_extractor()
+        self.unique_country_ , self.countryCodes_= self.countryList_extractor()
         self.unique_production_ = self.productionList_extractor()
-
-    def countryList_extractor(self):
-        if self.conn is None:
-            self.get_db_connection()
-
-        df = pd.read_sql("""
-    SELECT `Country`, COUNT(*) as country_count 
-    FROM `movies`
-    GROUP BY `Country`
-    ORDER BY country_count DESC
-    LIMIT 40
-    """, self.conn)
         
-        country_codes = df['Country'].tolist()
 
-        country_names = []
-        for code in country_codes:
-            try:
-
-                country_name = pycountry.countries.get(alpha_2=code).name
-                country_names.append(country_name)
-            except AttributeError:
-
-                country_names.append(f"Unknown ({code})")
-
-        return country_names
-
-    def productionList_extractor(self):
-        if self.conn is None:
-            self.get_db_connection()
-            
-        df = pd.read_sql(f'''SELECT `Production`, COUNT(*) as production_count 
-    FROM `movies`
-    GROUP BY `Production`
-    ORDER BY production_count DESC
-    LIMIT 24''', self.conn)
-        
-        productions = df['Production'].apply(ast.literal_eval)
-        all_production = [production for sublist in productions for production in sublist]
-        unique_production = pd.Series(all_production).unique()
-        
-        return unique_production
-
-    def genreList_extractor(self):
-        if self.conn is None:
-            self.get_db_connection()
-            
-        df = pd.read_sql(f"SELECT DISTINCT `Genre` FROM `movies`", self.conn)
-        
-        genres = df['Genre'].apply(ast.literal_eval)
-        all_genres = [genre for sublist in genres for genre in sublist]
-        unique_genres = pd.Series(all_genres).unique()
-        
-        return unique_genres
 
     def get_db_connection(self):
         # Set check_same_thread=False to allow usage across threads
@@ -83,21 +31,49 @@ class Db_Manager:
         
         data = df.to_dict(orient='records')
         return data
-    def fetch_by_page_no(self, pg_no=1, genre='all'):
+
+
+    def fetch_by_country_code(self, pg_no, code):
         if self.conn is None:
             self.get_db_connection()
 
         offset = (pg_no - 1) * 30  # Calculate the offset based on the page number
 
-        if genre == 'all':    
+        query = "SELECT * FROM `movies` WHERE `Country` = ? LIMIT 30 OFFSET ?"
+        total_movies_query = "SELECT COUNT(*) AS total_movies FROM `movies` WHERE `Country` = ?" 
+
+        # Fetch total number of movies for the given country
+        total_movies_df = pd.read_sql(total_movies_query, self.conn, params=(code,))
+        total_movies = total_movies_df['total_movies'][0]
+        
+        # Calculate total pages
+        total_pages = total_movies // 30 + (1 if total_movies % 30 > 0 else 0)
+
+        # Fetch actual movies data
+        df = pd.read_sql(query, self.conn, params=(code, offset))
+        data = df.to_dict(orient='records')
+        print("total pages" , total_pages)
+        return total_pages, data
+
+
+   
+    
+    def fetch_by_page_no(self, pg_no=1, genre='all' , country='all'):
+        if self.conn is None:
+            self.get_db_connection()
+
+        offset = (pg_no - 1) * 30  # Calculate the offset based on the page number
+
+        if genre == 'all' and country == 'all':    
             query = f"SELECT * FROM 'movies' LIMIT 30 OFFSET {offset}"
             total_movies_query = "SELECT COUNT(*) AS total_movies FROM 'movies'"
             
             # Get the total number of movies for all genres
             total_movies_df = pd.read_sql(total_movies_query, self.conn)
             total_movies = total_movies_df['total_movies'][0]
-            
-        else:
+                
+
+        elif genre != 'all' and country == 'all':
             # Query for a specific genre
             query = f"SELECT * FROM 'movies' WHERE Genre LIKE ? LIMIT 30 OFFSET {offset}"
             total_movies_query = f"SELECT COUNT(*) AS total_movies FROM 'movies' WHERE Genre LIKE ?"
@@ -106,14 +82,27 @@ class Db_Manager:
             total_movies_df = pd.read_sql(total_movies_query, self.conn, params=(f"%{genre}%",))
             total_movies = total_movies_df['total_movies'][0]
 
+        elif genre == 'all' and country != 'all':
+            # Query for a specific genre
+            query = f"SELECT * FROM 'movies' WHERE Genre LIKE ? LIMIT 30 OFFSET {offset}"
+            total_movies_query = f"SELECT COUNT(*) AS total_movies FROM 'movies' WHERE Country LIKE ?"
+
+            # Get the total number of movies for the specified genre
+            total_movies_df = pd.read_sql(total_movies_query, self.conn, params=(f"%{country}%",))
+            total_movies = total_movies_df['total_movies'][0]
+        
         # Calculate total pages based on the total number of movies
         total_pages = total_movies // 30 + (1 if total_movies % 30 > 0 else 0)
 
+
         # Fetch the actual movie data for the given page number
-        if genre == 'all':
+        if genre == 'all' and country =='all':
             df = pd.read_sql(query, self.conn)
-        else:
+        elif genre != 'all' and country == 'all':
             df = pd.read_sql(query, self.conn, params=(f"%{genre}%",))
+        elif country != 'all' and genre == 'all':
+            df = pd.read_sql(query, self.conn, params=(f"%{country}%",))
+            
 
         # Convert the dataframe to a list of dictionaries
         data = df.to_dict(orient='records')
@@ -121,7 +110,6 @@ class Db_Manager:
         print('total_pages:', total_pages)
         
         return data, total_pages
-
 
     def fetch_by_id(self, id):
         if self.conn is None:
@@ -155,11 +143,69 @@ class Db_Manager:
             return movie_detail
         return {}
 
+    
 
     def close_connection(self):
         if self.conn:
             self.conn.close()
             self.conn = None
+
+    def countryList_extractor(self):
+        if self.conn is None:
+            self.get_db_connection()
+
+        df = pd.read_sql("""
+    SELECT `Country`, COUNT(*) as country_count 
+    FROM `movies`
+    GROUP BY `Country`
+    ORDER BY country_count DESC
+    LIMIT 40
+    """, self.conn)
+        
+        country_codes = df['Country'].tolist()
+
+        country_names = []
+        for code in country_codes:
+            try:
+
+                country_name = pycountry.countries.get(alpha_2=code).name
+                country_names.append(country_name)
+            except AttributeError:
+
+                country_names.append(f"Unknown ({code})")
+                
+        
+        
+        return country_names ,country_codes
+
+
+    def productionList_extractor(self):
+        if self.conn is None:
+            self.get_db_connection()
+            
+        df = pd.read_sql(f'''SELECT `Production`, COUNT(*) as production_count 
+    FROM `movies`
+    GROUP BY `Production`
+    ORDER BY production_count DESC
+    LIMIT 24''', self.conn)
+        
+        productions = df['Production'].apply(ast.literal_eval)
+        all_production = [production for sublist in productions for production in sublist]
+        unique_production = pd.Series(all_production).unique()
+        
+        return unique_production
+
+    def genreList_extractor(self):
+        if self.conn is None:
+            self.get_db_connection()
+            
+        df = pd.read_sql(f"SELECT DISTINCT `Genre` FROM `movies`", self.conn)
+        
+        genres = df['Genre'].apply(ast.literal_eval)
+        all_genres = [genre for sublist in genres for genre in sublist]
+        unique_genres = pd.Series(all_genres).unique()
+        
+        return unique_genres
                 
     def count_movies(self):
         if self.conn == None:

@@ -66,18 +66,16 @@
         {% for movie in movies %}
         <div class="col-6 col-md-2 mb-4 color-b">
             <!-- Updated column sizes -->
-            <div class="card h-auto border border-2 border-white border-opacity-75" data-Id="{{ movie['Id'] }}"
-                data-title="{{movie['Title']}}" onclick="Card_clicked(event)">
+            <div class="card h-auto border border-2 border-white border-opacity-75" data-Id="{{ movie['Id'] }}" data-title="{{movie['Title']}}" onclick="Card_clicked(event)">
                 <img src="{{ movie['Img'] }}" class="card-img-top" alt="{{ movie['Title'] }}" />
-                <div class="card-body">
+                <div class="card-body ">
                     <h6 class="card-title text-truncate">
                         {{ movie['Title'] }}
                     </h6>
 
                     <p class="card-text">
                         {{ movie['Time'] }}
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                            class="bi bi-dot" viewBox="0 0 16 16">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
                             <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3" />
                         </svg> {{ movie['Duration'] }}
                     </p>
