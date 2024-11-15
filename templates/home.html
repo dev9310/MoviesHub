@@ -3,100 +3,155 @@
 <!-- **** Pagination **** -->
 
 <nav aria-label="Page navigation example">
-    <ul class="pagination d-flex justify-content-center">
+  <ul class="pagination d-flex justify-content-center">
+    {% if (pg_no) < 3 %}
+    <li class="page-item">
+      <a class="page-link disabled" href="#" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
 
-        {% if (pg_no)
-        < 3 %} <li class="page-item">
-            <a class="page-link disabled" href="#" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-            </a>
-            </li>
+    {% else %}
+    <li class="page-item">
+      <a
+        class="page-link"
+        href="/home/page={{pg_no-2}}&genre={{genre}}"
+        aria-label="Previous"
+      >
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
 
-            {% else %}
-            <li class="page-item">
-                <a class="page-link" href="/home/page={{pg_no-2}}&genre={{genre}}" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
+    {% endif %} {% if (pg_no) >= total_pages %}
+    <li class="page-item">
+      <a class="page-link" href="/home/page={{ pg_no -2}}&genre={{genre}}"
+        >{{ pg_no-2 }}</a
+      >
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="/home/page={{ pg_no - 1}}&genre={{genre}}"
+        >{{ pg_no -1 }}</a
+      >
+    </li>
+    <li class="page-item">
+      <a class="page-link active" href="/home/page={{ pg_no  }}&genre={{genre}}"
+        >{{ pg_no }}</a
+      >
+    </li>
 
-            {% endif %} {% if (pg_no) >= total_pages %}
-            <li class="page-item"><a class="page-link" href="/home/page={{ pg_no -2}}&genre={{genre}}">{{ pg_no-2 }}</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="/home/page={{ pg_no - 1}}&genre={{genre}}">{{
-                    pg_no -1 }}</a></li>
-            <li class="page-item"><a class="page-link active" href="/home/page={{ pg_no  }}&genre={{genre}}">{{ pg_no
-                    }}</a></li>
+    {% elif (pg_no-1) == 0 %}
+    <li class="page-item">
+      <a class="page-link active" href="/home/page={{ pg_no  }}&genre={{genre}}"
+        >{{ pg_no }}</a
+      >
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="/home/page={{ pg_no +1}}&genre={{genre}}"
+        >{{ pg_no+1 }}</a
+      >
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="/home/page={{ pg_no +2}}&genre={{genre}}"
+        >{{ pg_no+2 }}</a
+      >
+    </li>
 
-            {% elif (pg_no-1) == 0 %}
-            <li class="page-item"><a class="page-link active" href="/home/page={{ pg_no  }}&genre={{genre}}">{{ pg_no
-                    }}</a></li>
-            <li class="page-item"><a class="page-link" href="/home/page={{ pg_no +1}}&genre={{genre}}">{{ pg_no+1 }}</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="/home/page={{ pg_no +2}}&genre={{genre}}">{{ pg_no+2 }}</a>
-            </li>
+    {% else %}
+    <li class="page-item">
+      <a class="page-link" href="/home/page={{ pg_no - 1}}&genre={{genre}}"
+        >{{ pg_no -1 }}</a
+      >
+    </li>
+    <li class="page-item">
+      <a class="page-link active" href="/home/page={{ pg_no  }}&genre={{genre}}"
+        >{{ pg_no }}</a
+      >
+    </li>
+    <li class="page-item">
+      <a class="page-link" href="/home/page={{ pg_no +1}}&genre={{genre}}"
+        >{{ pg_no+1 }}</a
+      >
+    </li>
 
-            {% else %}
-            <li class="page-item"><a class="page-link" href="/home/page={{ pg_no - 1}}&genre={{genre}}">{{ pg_no -1
-                    }}</a></li>
-            <li class="page-item"><a class="page-link active " href="/home/page={{ pg_no  }}&genre={{genre}}">{{ pg_no
-                    }}</a></li>
-            <li class="page-item"><a class="page-link" href="/home/page={{ pg_no +1}}&genre={{genre}}">{{ pg_no+1 }}</a>
-            </li>
+    {% endif %} {% if (pg_no+3) > total_pages %}
+    <li class="page-item">
+      <a
+        class="page-link disabled"
+        href="/home/page={{ pg_no }}&genre={{genre}}"
+        aria-label="Next"
+        ><span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
 
-            {% endif %} {% if (pg_no+3) > total_pages %}
-            <li class="page-item">
-                <a class="page-link disabled" href="/home/page={{ pg_no }}&genre={{genre}}" aria-label="Next"><span
-                        aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-
-            {% else %}
-            <li class="page-item">
-                <a class="page-link " href="/home/page={{ pg_no+3 }}&genre={{genre}}" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-            {% endif %}
-
-    </ul>
+    {% else %}
+    <li class="page-item">
+      <a
+        class="page-link"
+        href="/home/page={{ pg_no+3 }}&genre={{genre}}"
+        aria-label="Next"
+      >
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+    {% endif %}
+  </ul>
 </nav>
 <!-- **** Cards **** -->
 <div class="container mt-5">
-    <div class="row">
-        {% for movie in movies %}
-        <div class="col-6 col-md-2 mb-4 color-b">
-            <!-- Updated column sizes -->
-            <div class="card h-auto border border-2 border-white border-opacity-75" data-Id="{{ movie['Id'] }}" data-title="{{movie['Title']}}" onclick="Card_clicked(event)">
-                <img src="{{ movie['Img'] }}" class="card-img-top" alt="{{ movie['Title'] }}" />
-                <div class="card-body ">
-                    <h6 class="card-title text-truncate">
-                        {{ movie['Title'] }}
-                    </h6>
+  <div class="row">
+    {% for movie in movies %}
+    <div class="col-6 col-md-2 mb-4 color-b">
+      <!-- Updated column sizes -->
+      <div
+        class="card h-auto border border-2 border-white border-opacity-75"
+        data-Id="{{ movie['Id'] }}"
+        data-title="{{movie['Title']}}"
+        onclick="Card_clicked(event)"
+      >
+        <img
+          src="{{ url_for('static', filename='cover/' ~ movie['index'] ~ '.jpg') }}"
+          class="card-img-top"
+          alt="{{ movie['Title'] }}"
+        />
 
-                    <p class="card-text">
-                        {{ movie['Time'] }}
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dot" viewBox="0 0 16 16">
-                            <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3" />
-                        </svg> {{ movie['Duration'] }}
-                    </p>
+        <div class="card-body">
+          <h6 class="card-title text-truncate">{{ movie['Title'] }}</h6>
 
-                    <p class="card-text mt-2 ms-2 position-absolute top-0 start-0">
-                        <button type="button" class="btn btn-dark"></button>
-                    </p>
+          <p class="card-text">
+            {{ movie['Time'] }}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-dot"
+              viewBox="0 0 16 16"
+            >
+              <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3" />
+            </svg>
+            {{ movie['Duration'] }}
+          </p>
 
-                    <h1 class="bg-dark mt-2 ms-2 position-absolute top-0 start-0 fs-6 rounded-3">
-                        <span class="badge text-white ">{{ movie['IMDB_rating'] }}</span>
-                    </h1>
+          <p class="card-text mt-2 ms-2 position-absolute top-0 start-0">
+            <button type="button" class="btn btn-dark"></button>
+          </p>
 
-                    <h1 class="bg-dark mt-2 me-2 position-absolute top-0 end-0 fs-6 rounded-3">
-                        <span class="badge text-white ">{{ movie['Type'] }}</span>
-                    </h1>
-                </div>
-            </div>
+          <h1
+            class="bg-dark mt-2 ms-2 position-absolute top-0 start-0 fs-6 rounded-3"
+          >
+            <span class="badge text-white">{{ movie['IMDB_rating'] }}</span>
+          </h1>
+
+          <h1
+            class="bg-dark mt-2 me-2 position-absolute top-0 end-0 fs-6 rounded-3"
+          >
+            <span class="badge text-white">{{ movie['Type'] }}</span>
+          </h1>
         </div>
-        {% endfor %}
+      </div>
     </div>
+    {% endfor %}
+  </div>
 </div>
-
 
 {% endblock body %}
