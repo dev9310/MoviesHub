@@ -96,22 +96,24 @@
     {% endif %}
   </ul>
 </nav>
+
 <!-- **** Cards **** -->
 <div class="container mt-5">
   <div class="row">
     {% for movie in movies %}
     <div class="col-6 col-md-2 mb-4 color-b">
       <!-- Updated column sizes -->
+
       <div
         class="card h-auto border border-2 border-white border-opacity-75"
         data-Id="{{ movie['Id'] }}"
-        data-title="{{movie['Title']}}"
+        data-title="{{ movie['Title'] }}"
         onclick="Card_clicked(event)"
       >
         <img
-          src="{{ movie['Img'] }}"
+          src="{{movie['Img']}}"
           class="card-img-top"
-          alt="{{ movie['Title'] }}"
+          alt="{{movie['Title']}}"
         />
 
         <div class="card-body">
