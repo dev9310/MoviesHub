@@ -2,8 +2,8 @@
 
 <!-- **** Pagination **** -->
 
-<nav aria-label="Page navigation example">
-  <ul class="pagination d-flex justify-content-center">
+<nav aria-label="Page navigation example ">
+  <ul class="pagination d-flex justify-content-center mt-4">
     {% if (pg_no) < 3 %}
     <li class="page-item">
       <a class="page-link disabled" href="#" aria-label="Previous">
@@ -103,19 +103,18 @@
     {% for movie in movies %}
     <div class="col-6 col-md-2 mb-4 color-b">
       <!-- Updated column sizes -->
-
       <div
         class="card h-auto border border-2 border-white border-opacity-75"
-        data-Id="{{ movie['Id'] }}"
+        data-Id="{{ movie['index'] }}"
         data-title="{{ movie['Title'] }}"
         onclick="Card_clicked(event)"
       >
         <img
           src="{{movie['Img']}}"
           class="card-img-top"
-          alt="{{movie['Title']}}"
+          alt="https://placehold.co/188x288"
         />
-
+        {{ movie['index'] }}
         <div class="card-body">
           <h6 class="card-title text-truncate">{{ movie['Title'] }}</h6>
 
@@ -154,6 +153,107 @@
     </div>
     {% endfor %}
   </div>
+
+  <nav aria-label="Page navigation example ">
+    <ul class="pagination d-flex justify-content-center mt-4">
+      {% if (pg_no) < 3 %}
+      <li class="page-item">
+        <a class="page-link disabled" href="#" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+
+      {% else %}
+      <li class="page-item">
+        <a
+          class="page-link"
+          href="/home/page={{pg_no-2}}&genre={{genre}}"
+          aria-label="Previous"
+        >
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+
+      {% endif %} {% if (pg_no) >= total_pages %}
+      <li class="page-item">
+        <a class="page-link" href="/home/page={{ pg_no -2}}&genre={{genre}}"
+          >{{ pg_no-2 }}</a
+        >
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="/home/page={{ pg_no - 1}}&genre={{genre}}"
+          >{{ pg_no -1 }}</a
+        >
+      </li>
+      <li class="page-item">
+        <a
+          class="page-link active"
+          href="/home/page={{ pg_no  }}&genre={{genre}}"
+          >{{ pg_no }}</a
+        >
+      </li>
+
+      {% elif (pg_no-1) == 0 %}
+      <li class="page-item">
+        <a
+          class="page-link active"
+          href="/home/page={{ pg_no  }}&genre={{genre}}"
+          >{{ pg_no }}</a
+        >
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="/home/page={{ pg_no +1}}&genre={{genre}}"
+          >{{ pg_no+1 }}</a
+        >
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="/home/page={{ pg_no +2}}&genre={{genre}}"
+          >{{ pg_no+2 }}</a
+        >
+      </li>
+
+      {% else %}
+      <li class="page-item">
+        <a class="page-link" href="/home/page={{ pg_no - 1}}&genre={{genre}}"
+          >{{ pg_no -1 }}</a
+        >
+      </li>
+      <li class="page-item">
+        <a
+          class="page-link active"
+          href="/home/page={{ pg_no  }}&genre={{genre}}"
+          >{{ pg_no }}</a
+        >
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="/home/page={{ pg_no +1}}&genre={{genre}}"
+          >{{ pg_no+1 }}</a
+        >
+      </li>
+
+      {% endif %} {% if (pg_no+3) > total_pages %}
+      <li class="page-item">
+        <a
+          class="page-link disabled"
+          href="/home/page={{ pg_no }}&genre={{genre}}"
+          aria-label="Next"
+          ><span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+
+      {% else %}
+      <li class="page-item">
+        <a
+          class="page-link"
+          href="/home/page={{ pg_no+3 }}&genre={{genre}}"
+          aria-label="Next"
+        >
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+      {% endif %}
+    </ul>
+  </nav>
 </div>
 
 {% endblock body %}

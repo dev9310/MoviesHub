@@ -115,13 +115,13 @@ class Db_Manager:
         if self.conn is None:
             self.get_db_connection()
 
-        query = f"SELECT * FROM `movies` WHERE `Id` = {id}"
+        query = f"SELECT * FROM `movies` WHERE `index` = {id}"
         df = pd.read_sql(query, self.conn)
         df_dict = df.iloc[0].to_dict()
         
         movie_detail = {
         
-        'id' : df_dict['Id'],
+        'index' : df_dict['index'],
         'title' : df_dict['Title'],
         'time' : df_dict['Time'],
         'type' : df_dict['Type'] ,
