@@ -1,12 +1,12 @@
 {% extends 'base.html' %} {% block movie_block %}
 
-<img src="{{ url_for('static', filename='bg_cover/' ~ movie['id'] ~ '.jpg') }}" loading="lazy" class="position-absolute start-0 img-fluid z-n1 gradient-opacity" alt="">
+<img src="{{ movie['CoverBg'] }}" loading="lazy" class="position-absolute start-0 img-fluid z-n1 gradient-opacity" alt="">
 
 <div class="movie-container">
     <div class="card mb-3 border-0 " style="max-width: 80vw; background-color: rgba(0, 0, 0, 0); ">
         <div class="row g-0">
             <div class="col-md-2 mt-4">
-                <img src="{{ url_for('static', filename='cover/' ~ movie['id'] ~ '.jpg') }}" loading="lazy" class="img-fluid " alt="...">
+                <img src="{{ movie['Img'] }}" loading="lazy" class="img-fluid " alt="...">
             </div>
             <div class="col-md-10">
                 <div class="card-body">
